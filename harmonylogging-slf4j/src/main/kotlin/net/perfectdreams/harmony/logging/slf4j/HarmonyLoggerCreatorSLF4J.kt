@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory
 
 class HarmonyLoggerCreatorSLF4J : HarmonyLoggerCreator {
     override fun logger(block: () -> Unit): HarmonyLogger {
-        val caller = Thread.currentThread().stackTrace[2]
-        val parentClazz = Class.forName(caller.className)
+        val callerClazz = block::class.java.name.substringBefore("$")
+        val parentClazz = Class.forName(callerClazz)
 
         val logger = LoggerFactory.getLogger(parentClazz)
 

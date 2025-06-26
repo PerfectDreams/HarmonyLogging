@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "net.perfectdreams.harmony.logging"
-    version = "1.0.1"
+    version = "1.0.2"
 
     repositories {
         mavenCentral()
