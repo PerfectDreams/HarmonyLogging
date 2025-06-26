@@ -14,6 +14,10 @@ object HarmonyLoggerFactory {
         return@lazy CREATOR_IMPLEMENTATION.logger(block)
     }
 
+    fun logger(name: String) = lazy {
+        return@lazy CREATOR_IMPLEMENTATION.logger(name)
+    }
+
     fun setLoggerCreator(creator: HarmonyLoggerCreator) {
         this.CREATOR_IMPLEMENTATION = creator
     }

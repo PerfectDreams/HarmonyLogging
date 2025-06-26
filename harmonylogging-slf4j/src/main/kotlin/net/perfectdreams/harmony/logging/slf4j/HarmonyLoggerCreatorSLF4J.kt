@@ -11,7 +11,12 @@ class HarmonyLoggerCreatorSLF4J : HarmonyLoggerCreator {
 
         val logger = LoggerFactory.getLogger(parentClazz)
 
-        println("ayaya")
+        return HarmonyLoggerSLF4J(logger)
+    }
+
+    override fun logger(name: String): HarmonyLogger {
+        val logger = LoggerFactory.getLogger(name)
+
         return HarmonyLoggerSLF4J(logger)
     }
 }

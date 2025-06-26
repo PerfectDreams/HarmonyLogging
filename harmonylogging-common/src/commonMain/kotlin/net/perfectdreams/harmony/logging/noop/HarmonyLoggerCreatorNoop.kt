@@ -9,4 +9,5 @@ class HarmonyLoggerCreatorNoop : HarmonyLoggerCreator {
     }
 
     override fun logger(block: () -> Unit) = LOGGER_INSTANCE
+    override fun logger(name: String) = LOGGER_INSTANCE
 }
