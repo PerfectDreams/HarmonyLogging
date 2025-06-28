@@ -5,28 +5,24 @@ import org.slf4j.Logger
 import org.slf4j.event.Level
 
 class HarmonyLoggerSLF4J(private val slf4jLogger: Logger) : HarmonyLogger {
-    override fun info(throwable: Throwable?, block: () -> String) {
-        if (slf4jLogger.isInfoEnabled)
-            slf4jLogger.info(block(), throwable)
+    override fun log(
+        level: net.perfectdreams.harmony.logging.Level,
+        throwable: Throwable?,
+        block: () -> String
+    ) {
+        val slf4jLevel = harmonyLoggingLevelToSLF4JLevel(level)
+
+        if (slf4jLogger.isEnabledForLevel(slf4jLevel))
+            slf4jLogger.atLevel(slf4jLevel).log(block(), throwable)
     }
 
-    override fun warn(throwable: Throwable?, block: () -> String) {
-        if (slf4jLogger.isWarnEnabled)
-            slf4jLogger.warn(block(), throwable)
-    }
-
-    override fun error(throwable: Throwable?, block: () -> String) {
-        if (slf4jLogger.isErrorEnabled)
-            slf4jLogger.error(block(), throwable)
-    }
-
-    override fun debug(throwable: Throwable?, block: () -> String) {
-        if (slf4jLogger.isDebugEnabled)
-            slf4jLogger.debug(block(), throwable)
-    }
-
-    override fun trace(throwable: Throwable?, block: () -> String) {
-        if (slf4jLogger.isTraceEnabled)
-            slf4jLogger.trace(block(), throwable)
+    private fun harmonyLoggingLevelToSLF4JLevel(
+        harmonyLevel: net.perfectdreams.harmony.logging.Level,
+    ) = when (harmonyLevel) {
+        net.perfectdreams.harmony.logging.Level.ERROR -> Level.ERROR
+        net.perfectdreams.harmony.logging.Level.WARN -> Level.WARN
+        net.perfectdreams.harmony.logging.Level.INFO -> Level.INFO
+        net.perfectdreams.harmony.logging.Level.DEBUG -> Level.DEBUG
+        net.perfectdreams.harmony.logging.Level.TRACE -> Level.TRACE
     }
 }
